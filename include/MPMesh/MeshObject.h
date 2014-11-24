@@ -15,12 +15,14 @@ public:
 	MeshObject();
 	~MeshObject();
         // Load Mesh
-        bool loadMesh(const std::string &name, const MPUtils::AttributeTable table=MPUtils::AttributeTable());
-        bool writeMesh(const std::string &name, const MPUtils::AttributeTable table=MPUtils::AttributeTable());
+        bool loadMesh(const std::string &name,
+							const MPUtils::AttributeTable table=MPUtils::AttributeTable());
+        bool writeMesh(const std::string &name,
+							const MPUtils::AttributeTable table=MPUtils::AttributeTable());
 	const std::list<std::vector<std::string> > getVertices() const;
 	const std::list<std::vector<std::string> > getNormals() const;
 	const std::list<std::vector<std::string> > getFaces() const;
-	
+
 	class Impl;
 	boost::shared_ptr<Impl> mImpl;
 };

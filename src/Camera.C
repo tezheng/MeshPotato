@@ -12,6 +12,15 @@ MeshPotato::MPUtils::Camera::Camera()
    setFarPlane(1.0e6);
 }
 
+const MeshPotato::MPUtils::MPVec3& Camera::eye() const  { return position; }
+const MeshPotato::MPUtils::MPVec3& Camera::view() const { return axis_view; }
+const MeshPotato::MPUtils::MPVec3& Camera::up() const   { return axis_up; }
+const MeshPotato::MPUtils::MPRay Camera::getRay(const double i, const double j)  const {
+    MPVec3 temp = view(i,j).unit();
+
+return MeshPotato::MPUtils::MPRay(position,temp);
+}
+
 void MeshPotato::MPUtils::Camera::setEyeViewUp( const MeshPotato::MPUtils::MPVec3& eye, const MeshPotato::MPUtils::MPVec3& view, const MeshPotato::MPUtils::MPVec3& up )
 {
    position = eye;
@@ -30,18 +39,29 @@ const MeshPotato::MPUtils::MPVec3 Camera::view( const double x, const double y )
    return (axis_up * yy + axis_right * xx + axis_view).unit();
 }
 
-void MeshPotato::MPUtils::Camera::setFov( const double fov )
+void Camera::setFov( const double fov )
 {
    FOV = fov;
    htanfov = tan( FOV*0.5*M_PI/180.0 );
    vtanfov = htanfov/aspect_ratio;
 }
 
-void MeshPotato::MPUtils::Camera::setAspectRatio( const double ar )
+const double& Camera::fov() const { return FOV; }
+
+void Camera::setAspectRatio( const double ar )
 {
    aspect_ratio = ar;
    vtanfov = htanfov/aspect_ratio;
 }
+
+void Camera::setNearPlane( const double n ){ near = n; }
+const double& Camera::nearPlane() const { return near; }
+
+const double& Camera::aspectRatio() const { return aspect_ratio; }
+
+
+void Camera::setFarPlane( const double n ){ far = n; }
+const double& Camera::farPlane() const { return far; }
 
 openvdb::math::Transform::Ptr MeshPotato::MPUtils::Camera::createFrustumTransform(openvdb::BBoxd bbox) {
    // Calculate taper from far and near plane distances
@@ -56,11 +76,11 @@ openvdb::math::Transform::Ptr MeshPotato::MPUtils::Camera::createFrustumTransfor
    topRight = MPVec3(farPlaneWidth/2.0, farPlaneHeight/2.0, -far);
    MPVec3 lowerLeft = position + view(0,0)*sqrt(near*near + (nearPlaneWidth/2.0)*(nearPlaneWidth/2.0));
    lowerLeft = MPVec3(-nearPlaneWidth/2.0, -nearPlaneHeight/2.0, -near);
-  
+
 //   float bbox_offset = taper/2.0;
 //   topRight.x() -= bbox_offset;
 
-   
+
 //   openvdb::BBoxd bbox(lowerLeft, topRight);
 
    std::cout << "taper = " << taper << std::endl;
@@ -84,7 +104,7 @@ openvdb::math::Transform::Ptr MeshPotato::MPUtils::Camera::createFrustumTransfor
    if(axis_view.dot(MPVec3(0,0,1)) > 0) {
       depth *= -1;
    }
-   
+
    openvdb::math::Transform::Ptr frustumTransform = openvdb::math::Transform::createFrustumTransform(bbox, taper, depth, nearPlaneWidth);
       frustumTransform->postTranslate( position + (axis_view * near));
 

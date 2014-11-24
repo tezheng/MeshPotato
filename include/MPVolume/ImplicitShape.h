@@ -15,19 +15,31 @@ namespace MeshPotato {
 		};
 		class ImplicitSphere : public ImplicitShape {
 			public:
-				static boost::shared_ptr<Volume<float> > Ptr(const float &_R,  const MeshPotato::MPUtils::MPVec3 &_C);
-				ImplicitSphere(const float &_R, const MeshPotato::MPUtils::MPVec3 &_C);
+				static boost::shared_ptr<Volume<float> > Ptr(
+								const float &_R,
+								const MeshPotato::MPUtils::MPVec3 &_C);
+
+				ImplicitSphere(const float &_R,
+											 const MeshPotato::MPUtils::MPVec3 &_C);
+
 				~ImplicitSphere();
+
 				const volumeDataType eval(const MeshPotato::MPUtils::MPVec3 &P) const;
 				const volumeGradType grad(const MeshPotato::MPUtils::MPVec3& P) const;
+				
 			private:
 				class Impl;
 				boost::shared_ptr<Impl> mImpl;
 		};
 		class PyroclasticSphere : public ImplicitShape {
 			public:
-				static VolumeFloatPtr Ptr(const float &_R,  const MeshPotato::MPUtils::MPVec3 &_C, const MeshPotato::MPNoise::Noise_t &_noiseparms);
-				PyroclasticSphere(const float &_R, const MeshPotato::MPUtils::MPVec3 &_C, const MeshPotato::MPNoise::Noise_t &_noiseparms);
+				static VolumeFloatPtr Ptr(const float &_R,
+																	const MeshPotato::MPUtils::MPVec3 &_C,
+																	const MeshPotato::MPNoise::Noise_t &_noiseparms);
+
+				PyroclasticSphere(const float &_R,
+													const MeshPotato::MPUtils::MPVec3 &_C,
+													const MeshPotato::MPNoise::Noise_t &_noiseparms);
 				~PyroclasticSphere();
 				const volumeDataType eval(const MeshPotato::MPUtils::MPVec3 &P) const;
 				const volumeGradType grad(const MeshPotato::MPUtils::MPVec3& P) const;

@@ -1,4 +1,4 @@
-#include "MPVolume/FieldAlgebra.h" 
+#include "MPVolume/FieldAlgebra.h"
 #include "MPUtils/Color.h"
 #include "MPUtils/Vector.h"
 #include <cmath>
@@ -10,22 +10,30 @@ class AddVolume<T>::Impl {
 		boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > f1,f2;
 	};
 template <typename T>
-AddVolume<T>::AddVolume(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) : mImpl(new AddVolume<T>::Impl) {
+AddVolume<T>::AddVolume(
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) :
+										mImpl(new AddVolume<T>::Impl) {
 	mImpl->f1 = _f1;
 	mImpl->f2 = _f2;
 }
-	
+
 template <typename T>
-boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > AddVolume<T>::Ptr(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) {
+boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > AddVolume<T>::Ptr(
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) {
+
 	return boost::shared_ptr<Volume<T> >(new AddVolume<T>(_f1, _f2));
 }
 
 template <typename T>
-const typename Volume<T>::volumeDataType AddVolume<T>::eval(const MeshPotato::MPUtils::MPVec3 &P) const {
+const typename Volume<T>::volumeDataType AddVolume<T>::eval(
+																const MeshPotato::MPUtils::MPVec3 &P) const {
 	return mImpl->f1->eval(P) + mImpl->f2->eval(P);
 }
 template <typename T>
-const typename Volume<T>::volumeGradType AddVolume<T>::grad(const MeshPotato::MPUtils::MPVec3 &P) const {}
+const typename Volume<T>::volumeGradType AddVolume<T>::grad(
+																const MeshPotato::MPUtils::MPVec3 &P) const {}
 
 template <typename T>
 class Union<T>::Impl {
@@ -33,22 +41,28 @@ class Union<T>::Impl {
 		boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > f1,f2;
 	};
 template <typename T>
-Union<T>::Union(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) : mImpl(new Union<T>::Impl) {
+Union<T>::Union(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) :
+									mImpl(new Union<T>::Impl) {
 	mImpl->f1 = _f1;
 	mImpl->f2 = _f2;
 }
-	
+
 template <typename T>
-boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Union<T>::Ptr(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) {
+boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Union<T>::Ptr(
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) {
 	return boost::shared_ptr<Volume<T> >(new Union<T>(_f1, _f2));
 }
 
 template <typename T>
-const typename Volume<T>::volumeDataType Union<T>::eval(const MeshPotato::MPUtils::MPVec3 &P) const {
+const typename Volume<T>::volumeDataType Union<T>::eval(
+									const MeshPotato::MPUtils::MPVec3 &P) const {
 	return std::max(mImpl->f1->eval(P), mImpl->f2->eval(P));
 }
 template <typename T>
-const typename Volume<T>::volumeGradType Union<T>::grad(const MeshPotato::MPUtils::MPVec3 &P) const {}
+const typename Volume<T>::volumeGradType Union<T>::grad(
+									const MeshPotato::MPUtils::MPVec3 &P) const {}
 
 
 template class AddVolume<float>;
@@ -68,23 +82,31 @@ class Blend<T>::Impl {
 		float A;
 	};
 template <typename T>
-Blend<T>::Blend(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2, const float _A) : mImpl(new Blend<T>::Impl) {
+Blend<T>::Blend(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2,
+								const float _A) :
+									mImpl(new Blend<T>::Impl) {
 	mImpl->f1 = _f1;
 	mImpl->f2 = _f2;
 	mImpl->A = _A;
 }
-	
+
 template <typename T>
-boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Blend<T>::Ptr(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2, const float _A) {
+boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Blend<T>::Ptr(
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+								const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2,
+								const float _A) {
 	return boost::shared_ptr<Volume<T> >(new Blend<T>(_f1, _f2, _A));
 }
 
 template <typename T>
-const typename Volume<T>::volumeDataType Blend<T>::eval(const MeshPotato::MPUtils::MPVec3 &P) const {
+const typename Volume<T>::volumeDataType Blend<T>::eval(
+								const MeshPotato::MPUtils::MPVec3 &P) const {
 	return exp(mImpl->f1->eval(P)) + exp( mImpl->f2->eval(P)) - mImpl->A;
 }
 template <typename T>
-const typename Volume<T>::volumeGradType Blend<T>::grad(const MeshPotato::MPUtils::MPVec3 &P) const {}
+const typename Volume<T>::volumeGradType Blend<T>::grad(
+								const MeshPotato::MPUtils::MPVec3 &P) const {}
 
 
 template class Blend<float>;
@@ -98,22 +120,30 @@ class Intersection<T>::Impl {
 		float A;
 	};
 template <typename T>
-Intersection<T>::Intersection(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) : mImpl(new Intersection<T>::Impl) {
+Intersection<T>::Intersection(
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2)
+										: mImpl(new Intersection<T>::Impl) {
 	mImpl->f1 = _f1;
 	mImpl->f2 = _f2;
 }
-	
+
 template <typename T>
-boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Intersection<T>::Ptr(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) {
+boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Intersection<T>::Ptr(
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2)
+{
 	return boost::shared_ptr<Volume<T> >(new Intersection<T>(_f1, _f2));
 }
 
 template <typename T>
-const typename Volume<T>::volumeDataType Intersection<T>::eval(const MeshPotato::MPUtils::MPVec3 &P) const {
+const typename Volume<T>::volumeDataType Intersection<T>::eval(
+									const MeshPotato::MPUtils::MPVec3 &P) const {
 	return std::min(mImpl->f1->eval(P), mImpl->f2->eval(P));
 }
 template <typename T>
-const typename Volume<T>::volumeGradType Intersection<T>::grad(const MeshPotato::MPUtils::MPVec3 &P) const {}
+const typename Volume<T>::volumeGradType Intersection<T>::grad(
+									const MeshPotato::MPUtils::MPVec3 &P) const {}
 
 
 template class Intersection<float>;
@@ -129,22 +159,29 @@ class Cutout<T>::Impl {
 		float A;
 	};
 template <typename T>
-Cutout<T>::Cutout(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) : mImpl(new Cutout<T>::Impl) {
+Cutout<T>::Cutout(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2)
+									: mImpl(new Cutout<T>::Impl) {
 	mImpl->f1 = _f1;
 	mImpl->f2 = _f2;
 }
-	
+
 template <typename T>
-boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Cutout<T>::Ptr(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1, const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2) {
+boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Cutout<T>::Ptr(
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+									const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f2)
+{
 	return boost::shared_ptr<Volume<T> >(new Cutout<T>(_f1, _f2));
 }
 
 template <typename T>
-const typename Volume<T>::volumeDataType Cutout<T>::eval(const MeshPotato::MPUtils::MPVec3 &P) const {
+const typename Volume<T>::volumeDataType Cutout<T>::eval(
+									const MeshPotato::MPUtils::MPVec3 &P) const {
 	return std::min(mImpl->f1->eval(P), -mImpl->f2->eval(P));
 }
 template <typename T>
-const typename Volume<T>::volumeGradType Cutout<T>::grad(const MeshPotato::MPUtils::MPVec3 &P) const {}
+const typename Volume<T>::volumeGradType Cutout<T>::grad(
+									const MeshPotato::MPUtils::MPVec3 &P) const {}
 
 
 template class Cutout<float>;
@@ -198,7 +235,7 @@ VectorNoise::VectorNoise(const MPNoise::Noise_t _parms):
 		mImpl->parms = _parms;
 		mImpl->perlin = MPNoise::FractalSum<MPNoise::PerlinNoiseGustavson>::Ptr();
 		mImpl->perlin->setParameters(mImpl->parms);
-		
+
 		mImpl->noise = mImpl->perlin;
 }
 boost::shared_ptr<MeshPotato::MPVolume::Volume<MPUtils::MPVec3> > VectorNoise::Ptr( const MPNoise::Noise_t _parms) {

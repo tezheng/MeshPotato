@@ -16,8 +16,10 @@ namespace MeshPotato {
 		FrustumLight(boost::shared_ptr<MeshPotato::MPVolume::FrustumGrid> _frustum,
 		MeshPotato::MPUtils::Color _color);
 
-		virtual const FrustumLight::volumeDataType eval(const MeshPotato::MPUtils::MPVec3 &P) const;
-		virtual const FrustumLight::volumeGradType grad (const MeshPotato::MPUtils::MPVec3 &P) const;
+		virtual const FrustumLight::volumeDataType eval(
+							const MeshPotato::MPUtils::MPVec3 &P) const;
+		virtual const FrustumLight::volumeGradType grad (
+							const MeshPotato::MPUtils::MPVec3 &P) const;
 		private:
 		class Impl;
 		boost::shared_ptr<Impl> mImpl;

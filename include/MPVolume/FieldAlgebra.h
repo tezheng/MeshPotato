@@ -33,9 +33,9 @@ AdvectVolume(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1
 	,const VolumeVectorPtr _v1
 	, const float dt);
 static boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > Ptr(
-	const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1
-	,const VolumeVectorPtr _v2
-	, const float dt);
+	 const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > _f1,
+	 const VolumeVectorPtr _v2,
+	 const float dt);
 	/// Returns the advected value at a point in world space
 const typename Volume<T>::volumeDataType eval(const MPUtils::MPVec3 &P) const;
 /// Returns the gradient at a point in world space
