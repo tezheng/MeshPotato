@@ -62,11 +62,9 @@ class Camera
   private:
     class Impl;
     boost::shared_ptr<Impl> mImpl;
-   
+
 
 
 };
 }}
 #endif
-
-

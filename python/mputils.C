@@ -9,6 +9,7 @@
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
 using namespace boost::python;
 using namespace MeshPotato::MPUtils;
+
 MPVec3 getMPVec3(boost::python::list& ls) {
 	MPVec3 vec;
 	if (len(ls) == 3) {

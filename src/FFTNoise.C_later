@@ -1,12 +1,30 @@
 
 #include <cstdlib>
-#include "MPNoise/FFTNoise.h"
+#include "MeshPotato/MPNoise/FFTNoise.h"
+#include "MeshPotato/MPVolume/VDBVolumeGrid.h"
 #include <fftw3.h>
 
 
 
 namespace MeshPotato {
 	namespace MPNoise {
+		class Impl {
+		public:
+			Impl() : grid() {}
+
+			MeshPotato::MPVolume::VDBVolumeGrid<float> grid;
+
+
+		};
+
+		FFTNoise::FFTNoise() : mImpl(new Impl()){}
+
+		FFTNoise::~FFTNoise(){}
+
+		float FFTNoise::eval( const MeshPotato::MPUtils::MPVec3& P ) const { return mImpl->grid.eval(P); }
+
+		//TODO: Not implemented yet
+		void FFTNoise::getParameters( Noise_t& parameters ) const {}
 
 
 		void FFTNoise::setParameters( const Noise_t& n )

@@ -141,6 +141,7 @@ namespace MeshPotato {
 			MeshPotato::MPUtils::MPVec3 P0;
 			MeshPotato::MPUtils::Color color;
 		};
+		
 		class Noise
 		{
 			public:

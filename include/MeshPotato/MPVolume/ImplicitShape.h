@@ -71,34 +71,29 @@ namespace MeshPotato {
 		class Clamp: public MeshPotato::MPVolume::Volume<T> {
 			public:
 			typedef typename GradType<T>::GType volumeGradType;
-			static boost::shared_ptr<Volume<T> > Ptr(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> >&_f,  const float _e0, const float _e1) {
-				return boost::shared_ptr<Clamp>(new Clamp<T>(_f, _e0, _e1));
-			}
-			Clamp(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > &_f,  const float _e0, const float _e1) : f(_f), e0(_e0), e1(_e1) {}
-			virtual const T eval(const MeshPotato::MPUtils::MPVec3 &P) const {
-                                        if (e0 <= f->eval(P) && f->eval(P) <= e1) return f->eval(P);
-					else if (f->eval(P) < e0) return e0;
-					else if (f->eval(P) > e1) return e1;
-			}
-			virtual const volumeGradType grad(const MeshPotato::MPUtils::MPVec3 &P) const {}
+			static boost::shared_ptr<Volume<T> > Ptr(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > &_f,  const float _e0, const float _e1);
+
+			Clamp(const boost::shared_ptr<MeshPotato::MPVolume::Volume<T> > &_f,  const float _e0, const float _e1);
+			virtual const T eval(const MeshPotato::MPUtils::MPVec3 &P) const;
+			virtual const volumeGradType grad(const MeshPotato::MPUtils::MPVec3 &P) const;
 			private:
-				boost::shared_ptr<MeshPotato::MPVolume::Volume<T> >f;
-				float e0, e1;
+				class Impl;
+				boost::shared_ptr<Impl> mImpl;
 		};
+		typedef Clamp<float> ClampVolumeFloat;
+
 		template<typename T>
 		class ConstantVolume: public MeshPotato::MPVolume::Volume<T> {
 			public:
 			typedef typename GradType<T>::GType volumeGradType;
-			static boost::shared_ptr<Volume<T> > Ptr(const T _value) {
-				return boost::shared_ptr<ConstantVolume>(new ConstantVolume<T>(_value));
-			}
-			ConstantVolume(const T _value) : value(_value) {}
-			virtual const T eval(const MeshPotato::MPUtils::MPVec3 &P) const {
-				return value;
-			}
-			virtual const volumeGradType grad(const MeshPotato::MPUtils::MPVec3 &P) const {}
+			static boost::shared_ptr<Volume<T> > Ptr(const T _value);
+			ConstantVolume(const T _value);
+			virtual const T eval(const MeshPotato::MPUtils::MPVec3 &P) const;
+			virtual const volumeGradType grad(const MeshPotato::MPUtils::MPVec3 &P) const;
 			private:
-				T value;
+				class Impl;
+				boost::shared_ptr<Impl> mImpl;
+
 		};
 	}
 }

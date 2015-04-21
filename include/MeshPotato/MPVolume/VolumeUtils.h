@@ -32,7 +32,7 @@ namespace MeshPotato {
 
 		/// Helper function for building frustum cameras
 		boost::shared_ptr<MeshPotato::MPUtils::Camera> buildFrustumCamera(MeshPotato::MPUtils::MPVec3 &eye, openvdb::FloatGrid::Ptr grid);
-		
+
 		double computeFOVDegrees(MeshPotato::MPUtils::MPVec3 &point, MeshPotato::MPUtils::MPVec3 &eye, MeshPotato::MPUtils::MPVec3 &view);
 		double computeDistance(MeshPotato::MPUtils::MPVec3 &point, MeshPotato::MPUtils::MPVec3 &eye, MeshPotato::MPUtils::MPVec3 &view);
 

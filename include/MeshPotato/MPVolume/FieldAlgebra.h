@@ -39,6 +39,7 @@ public:
 
 /// returns the sum of the two volumes at a point in world space
 const typename Volume<T>::volumeDataType  eval(const MeshPotato::MPUtils::MPVec3 &P) const;
+
 /// computes the gradient of the sum of the two volumes (not implemented yet)
 const typename Volume<T>::volumeGradType grad(
 	  const MeshPotato::MPUtils::MPVec3 &P) const;
@@ -46,6 +47,7 @@ private:
 class Impl;
 boost::shared_ptr<Impl> mImpl;
 };
+
 /// Advect a resolution independent volume with a velocity field
 template <typename T>
 class AdvectVolume:public Volume <T> {

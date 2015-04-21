@@ -7,6 +7,7 @@ SET(Boost_NEEDED_LIBS filesystem
                       python
                       thread
                       system
+		      iostreams
                       )
 
 
